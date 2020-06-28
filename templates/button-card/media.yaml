@@ -1,0 +1,164 @@
+# MEDIA PLAYER BUTTON
+mediaplayer_button_style:
+  template: homekit_style
+
+  tap_action: &media_tap_action
+    action: >
+      [[[ if (entity.state === 'off' || entity.state === 'idle' || entity.state === 'standby') {
+      return 'none'; } else { return 'call-service'; } ]]]
+    service: media_player.media_play_pause
+    service_data:
+      entity_id: '[[[ return entity.entity_id ]]]'
+    haptic: light
+
+  state: 
+      - styles:
+          card: [background-color: 'rgba(255, 255, 255, 0.8)']
+          name: [color: 'rgba(0, 0, 0, 0.6)']
+          state: [color: 'rgba(0, 0, 0, 0.6)']
+          # icon: [color: "#fbc02d"]
+        value: 'on'
+
+      - styles:
+          card: [background-color: 'rgba(255, 255, 255, 0.8)']
+          name: [color: 'rgba(0, 0, 0, 0.6)']
+          state: [color: 'rgba(0, 0, 0, 0.6)']
+          # icon: [color: "#fbc02d"]
+        value: 'playing'
+
+      - styles:
+          card: [background-color: 'rgba(255, 255, 255, 0.8)']
+          name: [color: 'rgba(0, 0, 0, 0.6)']
+          state: [color: 'rgba(0, 0, 0, 0.6)']
+          # icon: [color: "#fbc02d"]
+        value: 'idle'
+
+      - styles:
+          card: [background-color: 'rgba(255, 255, 255, 0.8)']
+          name: [color: 'rgba(0, 0, 0, 0.6)']
+          state: [color: 'rgba(0, 0, 0, 0.6)']
+          # icon: [color: "#fbc02d"]
+        value: 'standby'
+
+      - styles:
+          card: [background-color: 'rgba(255, 255, 255, 0.8)']
+          name: [color: 'rgba(0, 0, 0, 0.6)']
+          state: [color: 'rgba(0, 0, 0, 0.6)']
+          # icon: [color: "#fbc02d"]
+        value: 'paused'
+
+  custom_fields:
+    play_pause: >
+      [[[ const style = `<style>.scale-up { animation: scale-up 0.3s; cubic-bezier(.05,.5,.3,1) 1; transform-origin: center center; }
+      @keyframes scale-up { 0% { opacity: 0; transform: scale(0); } 100% { opacity: 1; transform: scale(1); } }</style>`;
+      if (entity.state === 'playing') { return `<svg viewBox="0 0 166 166">${style}<path class="scale-up" d="M0 0h59.9v166H0zm106.1 0H166v166h-59.9z"/></svg>`; }
+      if (entity.state === 'paused') { return `<svg viewBox="0 0 166 166">${style}<path class="scale-up" d="M0 0l166 83L0 166z"/></svg>`; } ]]]    
+
+  styles:
+    custom_fields:
+      play_pause:
+        [filter: 
+        "[[[ return entity.attributes.entity_picture == null ? 'none' : 'drop-shadow(0 0 1.3vw rgba(0,0,0,0.7))'; ]]]", 
+        fill: '#dedede', top: 0, right: 0, bottom: 70px, left: 80px, margin: auto, width: 15%, height: 15%, position: absolute, z-index: 10]
+      
+  hold_action:
+    action: more-info  
+  icon: mdi:youtube-tv
+
+# MEDIA PLAYER SPEAKER
+media_audio:
+  template: homekit_style
+  icon: mdi:speaker
+  tap_action: *media_tap_action
+  show_icon: true
+
+  hold_action:
+    action: call-service
+    service: browser_mod.popup
+    service_data:
+      title: '[[[ return entity.attributes.friendly_name ]]]'
+      deviceID: this
+      style:
+        --ha-card-border-radius: 1em
+        --more-info-header-color: rgba(255,255,255,0.6)
+        background: none
+        box-shadow: none
+      card:  
+        type: vertical-stack
+        cards:      
+        - type: custom:mini-media-player
+          entity: '[[[ return entity.entity_id ]]]'   
+          icon: '[[[ return entity.attributes.icon ]]]'
+          artwork: full-cover                  
+
+  state_display: >
+    [[[ if (entity.attributes.media_title === 'Nothing playing' || entity.attributes.media_title === 'No title' && entity.state === 'paused' ) { return 'Nothing playing'; }
+    if (entity.attributes.media_title === 'No title' && entity.state === 'playing') { return 'No title'; }
+    else { return entity.attributes.media_title; } ]]]
+
+  state: 
+    - styles:
+        card: [background-color: 'rgba(255, 255, 255, 0.8)']
+        name: [color: var(--primary-text-color)]
+        state: [color: var(--primary-text-color)]
+      value: 'on'
+
+    - styles:
+        card: [background-color: 'rgba(255, 255, 255, 0.8)']
+        name: [color: var(--primary-text-color)]
+        state: [color: var(--primary-text-color)]
+      value: 'playing'
+
+    - styles:
+        card: [background-color: 'rgba(255, 255, 255, 0.8)']
+        name: [color: 'rgba(0, 0, 0, 0.6)']
+        state: [color: 'rgba(0, 0, 0, 0.6)']
+      value: 'idle'
+
+    - styles:
+        card: [background-color: 'rgba(255, 255, 255, 0.8)']
+        name: [color: 'rgba(0, 0, 0, 0.6)']
+        state: [color: 'rgba(0, 0, 0, 0.6)']
+      value: 'standby'
+
+    - styles:
+        card: [background-color: 'rgba(255, 255, 255, 0.8)']
+        name: [color: var(--primary-text-color)]
+        state: [color: var(--primary-text-color)]
+      value: 'paused'    
+
+  custom_fields:
+    media_image: >
+      <svg viewBox="0 0 50 50" />
+
+    play_pause: >
+      [[[ const style = `<style>.scale-up { animation: scale-up 0.3s; cubic-bezier(.05,.5,.3,1) 1; transform-origin: center center; }
+      @keyframes scale-up { 0% { opacity: 0; transform: scale(0); } 100% { opacity: 1; transform: scale(1); } }</style>`;
+      if (entity.state === 'playing') { return `<svg viewBox="0 0 166 166">${style}<path class="scale-up" d="M0 0h59.9v166H0zm106.1 0H166v166h-59.9z"/></svg>`; }
+      if (entity.state === 'paused') { return `<svg viewBox="0 0 166 166">${style}<path class="scale-up" d="M0 0l166 83L0 166z"/></svg>`; } ]]]          
+
+  styles:
+    custom_fields:
+
+      media_image:
+        # [background-image:
+        # "[[[ return entity.attributes.entity_picture == null ? 'linear-gradient(0deg, rgba(115, 115, 115, 0.2) 0%, rgba(115, 115, 115, 0.2) 100%)' 
+        # : 'linear-gradient(0deg, rgba(13,17,19,0.9) 0%, rgba(13,17,19,0) 50%), url(' + entity.attributes.entity_picture + ')'; ]]]", 
+        # background-size: cover, top: 0%, left: 0%, width: 100%, position: absolute]
+        [background-image:
+        "[[[ return entity.attributes.entity_picture == null ? 'null' 
+        : 'linear-gradient(0deg, rgba(13,17,19,0.9) 0%, rgba(13,17,19,0) 50%), url(' + entity.attributes.entity_picture + ')'; ]]]", 
+        background-size: cover, top: 0%, left: 0%, width: 100%, position: absolute]
+
+      play_pause:
+        [filter: 
+        "[[[ return entity.attributes.entity_picture == null ? 'none' : 'drop-shadow(0 0 1.3vw rgba(0,0,0,0.7))'; ]]]", 
+        fill: '#dedede', top: 0, right: 0, bottom: 70px, left: 80px, margin: auto, width: 15%, height: 15%, position: absolute, z-index: 10]        
+
+      icon:
+        [opacity: "[[[ return entity.attributes.entity_picture == null ? 1 : 0; ]]]", z-index: 10]
+ 
+    name:
+      [z-index: 10]
+    state:
+      [z-index: 10]  

@@ -1,0 +1,23 @@
+alarm:
+  template: homekit_style
+  icon: mdi:security
+  show_icon: true  
+  tap_action: 
+    action: call-service
+    service: > 
+      [[[ 
+        if (entity.state == 'disarmed') {
+          return 'alarm_control_panel.alarm_arm_home';
+        }
+        else if (entity.state == 'armed_home') {
+          return 'alarm_control_panel.alarm_disarm';
+        }
+        else if (entity.state == 'armed_away') {
+          return 'alarm_control_panel.alarm_disarm';
+        }
+      ]]]
+    service_data:
+      entity_id: alarm_control_panel.alarma
+      code: !secret alarm_code
+
+  hold_action: !include ../popup/alarm_popup.yaml

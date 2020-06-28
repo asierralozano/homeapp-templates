@@ -1,0 +1,55 @@
+# LIGHT BUTTON
+light_button_style:
+  template: homekit_style
+  hold_action: !include ../popup/light_popup.yaml    
+  state: 
+    # - <<: *button_state 
+    - styles:
+        icon: [color: 'var(--button-card-light-color)']   
+  styles:
+    grid:
+      - position: relative
+    custom_fields:
+      brightness: 
+        [top: 8.5%, right: 10%, width: 50px, height: 50px, position: absolute, letter-spacing: 0.03vw]
+
+
+  custom_fields:    
+    brightness: >
+      [[[ if (entity.state === 'on' && entity.attributes.brightness) {
+      const brightness = Math.round(entity.attributes.brightness / 2.54);
+      const radius = 20.5; const circumference = radius * 2 * Math.PI; 
+      return `<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="${radius}" stroke="#b2b2b2" stroke-width="1.5" fill="none" style="
+      transform: rotate(-90deg); transform-origin: 50% 50%; stroke-dasharray: ${circumference}; stroke-dashoffset: ${circumference - brightness / 100 * circumference};" />
+      <text x="50%" y="54%" fill="#8d8e90" font-size="11" text-anchor="middle" alignment-baseline="middle">${brightness}<tspan font-size="">%</tspan></text></svg>`; } ]]]
+
+# LIGHT TILE SLIM
+light_slim_tile:
+  template: light_button_style
+  aspect_ratio: 4/1          
+
+  styles:
+    grid:
+      - grid-template-areas: '". ." "i n" ". ."'
+      - grid-template-rows: '[row1-start] 10% [row1-end central-area] auto [central-area-end row3-start] 10% [row3-end]'
+      - grid-template-columns: '[icon-start] 30% [icon-end central-area] auto [central-area-end]'
+
+    state:
+      - padding-left: 0%
+      - padding-top: 35px   
+      - grid-area: "n"          
+
+    name:
+      - padding-bottom: 5px     
+      - padding-left: 0%         
+
+    icon:
+      - width: 40%
+      - padding-left: 10%
+      - padding-top: 0px
+      - padding-bottom: 0px   
+
+    custom_fields:
+      brightness: 
+        [top: 1f, right: 5%, width: 50px, height: 50px, position: absolute, letter-spacing: 0.03vw]    
+

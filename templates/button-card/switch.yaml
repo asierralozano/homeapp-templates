@@ -1,0 +1,5 @@
+# SWITCH BUTTON
+switch_button_style:
+  template: homekit_style
+  hold_action: !include ../popup/switch_popup.yaml
+  icon: '[[[return entity.attributes.icon]]]'

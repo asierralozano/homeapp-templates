@@ -1,0 +1,20 @@
+header:
+  card: 
+    content: |
+      # [[content]]
+    style:
+      .: |
+        ha-card {
+          --paper-card-background-color: none !important;
+          box-shadow: none !important;
+        }
+      ha-markdown:
+        $: |
+          h1 {
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Helvetica;
+            color: rgba(0, 0, 0, 0.6);
+            letter-spacing: '-0.01em';
+          }
+    type: markdown  

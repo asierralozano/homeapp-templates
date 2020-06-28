@@ -1,0 +1,33 @@
+weather_button_style:
+  template: homekit_style
+  icon: >
+    [[[
+      if (entity.state === 'cloudy'){
+        return 'mdi:weather-cloudy'
+      }
+      else if (entity.state === 'partlycloudy'){
+        return 'mdi:weather-partly-cloudy'
+      }
+      else if (entity.state === 'sunny'){
+        return 'mdi:weather-sunny'
+      }
+      else if (entity.state === 'rainy'){
+        return 'mdi:weather-rainy'
+      }
+    ]]]
+  styles:
+    card: 
+      - background: 'linear-gradient(0deg, rgba(106,195,213,1) 0%, rgba(0,166,200,1) 100%)'
+    name: [color: 'rgba(0, 0, 0, 0.6)']
+    state: [color: 'rgba(0, 0, 0, 0.6)']   
+    custom_fields:
+      temperature: 
+        [top: 16.5%, right: 10%, width: 50px, height: 50px, position: absolute, letter-spacing: 0.03vw]
+
+  custom_fields:
+    temperature: >
+      [[[ 
+        const temp = entity.attributes.temperature 
+        return `${temp}°`
+      ]]]
+    

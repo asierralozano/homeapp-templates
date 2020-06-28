@@ -1,0 +1,61 @@
+action: call-service
+service: browser_mod.popup
+service_data:
+  title: Alarm
+  deviceID: this
+  style:
+    --ha-card-border-radius: 1em
+    --more-info-header-color: rgba(255,255,255,0.6)
+    background: none
+    box-shadow: none
+  card:
+    type: vertical-stack
+    cards:
+      - type: entities
+        #title: '[[[ return entity.attributes.friendly_name ]]]'
+        style: |
+          ha-card {
+            animation: pop-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: center;
+          }
+          @keyframes pop-in {
+            0% { transform: scale(0.6); opacity: 0; } 20% { opacity: 0; } 100% { transform: scale(1); opacity: 0.9; }}
+        show_header_toggle: false
+        entities:
+          - type: custom:switch-popup-card
+            entity_value_path: state
+            fullscreen: false
+            noActiveState: "-"
+            entities:
+              - '[[[ return entity.entity_id ]]]'
+            buttons:
+              - icon: "mdi:lock"
+                value: "armed_away"
+                name: "Arm Away"
+                color: "#FFF"
+                icon_color: "rgba(255,255,255,1)"
+                service: alarm_control_panel.alarm_arm_away
+                service_data:            
+                  entity_id: this
+                  code: !secret alarm_code
+
+              - icon: "mdi:lock"
+                value: "armed_home"
+                name: "Arm Home"
+                color: "#FFF"
+                icon_color: "rgba(255,255,255,1)"
+                service: alarm_control_panel.alarm_arm_home
+                service_data:
+                  entity_id: this
+                  code: !secret alarm_code
+
+              - icon: "mdi:lock"
+                value: "arming"
+                name: "Arming"
+                color: 'rgba(219,64,64,1)'
+                icon_color: "rgba(219,64,64,1)"
+
+              - icon: "mdi:lock-open"
+                value: "disarmed"
+                name: "Disarmed"
+                color: "#FFF"
+                icon_color: "rgba(255,255,255,1)"

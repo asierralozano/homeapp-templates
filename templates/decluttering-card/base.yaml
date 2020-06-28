@@ -1,0 +1,50 @@
+horizontal_base:
+  card: 
+    entity: "[[entity]]"
+    show_state: true
+
+    type: 'custom:button-card' 
+    icon: mdi:floor-lamp
+    aspect_ratio: 4/1
+    styles:
+      card:
+        - border-radius: 20px    
+      icon: 
+        - right: 70%
+
+      name:
+        - justify-self: start
+        - padding-left: 20%
+        - font-weight: bold
+        - font-family: Helvetica
+        - font-size: 13px
+        - padding-bottom: 20px   
+        - color: var(--primary-text-color)
+        - max-width: 75%   
+        - grid-area: "i"  
+
+      state:
+        - font-size: 11px
+        - font-family: Helvetica
+        - justify-self: start
+        - text-transform: capitalize
+        - font-weight: bold
+        - padding-left: 20%
+        - padding-top: 20px   
+        - color: var(--primary-text-color)
+        - max-width: 75%     
+        - grid-area: "i"   
+
+    state:
+      - styles:
+          card: [background-color: 'rgba(255, 255, 255, 0.8)']
+          name: [color: 'rgba(0, 0, 0, 0.6)']
+          state: [color: 'rgba(0, 0, 0, 0.6)']
+          icon: [color: 'var(--button-card-light-color)']   
+        value: 'on'
+        id: _state_value_on
+
+      - styles: 
+          icon:
+            - color: rgb(142, 142, 147)
+        value: 'off'      
