@@ -1,0 +1,186 @@
+resources:
+  - type: js
+    url: /hacsfiles/bar-card/bar-card.js
+  - type: module
+    url: /hacsfiles/button-card/button-card.js
+  - type: js
+    url: /hacsfiles/github-card/github-card.js
+  - type: module
+    url: /hacsfiles/lovelace-layout-card/layout-card.js
+  - type: module
+    url: /hacsfiles/custom-header/custom-header.js
+  - url: https://cdn.jsdelivr.net/npm/rgb-light-card
+    type: js    
+  - type: module
+    url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js
+  - type: module
+    url: /hacsfiles/spotify-card/spotify-card.js
+  - type: module
+    url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+  - type: module    
+    url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
+  - type: module    
+    url: /hacsfiles/lovelace-card-mod/card-mod.js
+  - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
+    type: module   
+  - url: /hacsfiles/light-popup-card/light-popup-card.js
+    type: module     
+  - url: /hacsfiles/light-entity-card/light-entity-card.js
+    type: module     
+  - url: /hacsfiles/decluttering-card/decluttering-card.js
+    type: module       
+  - url: /hacsfiles/switch-popup-card/switch-popup-card.js
+    type: module       
+  - url: /local/decluttering-card.js
+    type: module    
+  - url: /hacsfiles/swipe-card/swipe-card.js
+    type: module
+
+background: linear-gradient(32deg, rgba(131,58,180,1) 0%, rgba(55,127,226,1) 35%, rgba(255,137,137,1) 64%, rgba(252,176,69,1) 100%)
+
+custom_header:
+  background: 'rgba(0, 0, 0, 0.3);'
+  compact_mode: true
+  elements_color: rgba(10, 10, 10, 0.8)
+  button_text:
+    options: '{{ hours24 }}:{{ minutesLZ }}'
+
+title: Home
+views:
+  - badges:
+    icon: mdi:home
+    cards:
+    
+      - type: vertical-stack
+        # column_num: 3 
+        cards:
+          - type: custom:decluttering-card
+            template: header
+            variables:
+              - content: Lights
+
+          - type: vertical-stack
+            cards:   
+
+            - type: custom:button-card
+              template: light_slim_tile
+              entity: light.salon
+              icon: mdi:sofa       
+
+            - type: horizontal-stack
+              cards:
+              - entity: light.luz_del_sofa
+                template: light_button_style
+                type: 'custom:button-card' 
+                icon: mdi:led-strip-variant 
+
+              - entity: light.luz_television_derecha
+                template: light_button_style
+                type: 'custom:button-card' 
+                icon: mdi:lightbulb
+                name: TV Derecha
+
+              - entity: light.luz_television_izquierda
+                template: light_button_style
+                type: 'custom:button-card' 
+                icon: mdi:lightbulb
+                name: TV Izquierda              
+
+            - type: custom:button-card
+              template: light_slim_tile               
+              entity: light.dormitorio
+              icon: mdi:bed-empty
+
+            - type: horizontal-stack
+              cards: 
+              - entity: light.tradfri_bulb
+                template: light_button_style
+                type: 'custom:button-card' 
+                icon: mdi:lightbulb
+                name: Pequena
+
+              - entity: light.tradfri_bulb_2
+                template: light_button_style
+                type: 'custom:button-card' 
+                icon: mdi:lightbulb
+                name: Grande
+
+              - type: "custom:button-card"
+                color_type: blank-card                
+           
+      - type: vertical-stack
+        cards:
+
+        - type: 'custom:decluttering-card'
+          template: header
+          variables:
+            - content: Others                   
+
+        - type: horizontal-stack
+          cards:
+          - entity: input_boolean.visitor_mode
+            template: homekit_style
+            type: 'custom:button-card'  
+
+          - entity: input_boolean.night_mode
+            template: switch_button_style
+            type: 'custom:button-card'    
+
+          - entity: weather.home
+            template: weather_button_style
+            type: 'custom:button-card'  
+            name: Vancouver
+
+        - type: 'custom:decluttering-card'
+          template: header
+          variables:
+            - content: Security                                 
+
+        - camera_view: live
+          camera_image: camera.wyze_cam
+          entities: []
+          image: 'https://www.home-assistant.io/images/merchandise/shirt-frontpage.png'
+          type: picture-glance   
+          aspect_ratio: 3/1   
+
+        - type: horizontal-stack
+          cards:
+
+          - entity: alarm_control_panel.alarma
+            template: alarm
+            type: 'custom:button-card' 
+            name: Alarm    
+
+          - type: 'custom:button-card'
+            entity: binary_sensor.sensor_puerta_principal  
+            template: binary_sensor   
+            name: Puerta principal                     
+
+          - type: "custom:button-card"
+            color_type: blank-card     
+
+        - type: 'custom:decluttering-card'
+          template: header
+          variables:
+            - content: Media
+
+        - type: horizontal-stack
+          cards:
+          - entity: media_player.dining_room_display
+            template: media_audio
+            type: 'custom:button-card'  
+            
+          - entity: media_player.lenovosmartclock7923
+            template: media_audio
+            type: 'custom:button-card' 
+
+          - type: "custom:button-card"
+            entity: media_player.nvidia_shield_tv
+            template: mediaplayer_button_style       
+
+    panel: false
+    path: general
+    title: General
+    
+button_card_templates: !include_dir_merge_named ui_templates/templates/button-card
+decluttering_templates: !include_dir_merge_named ui_templates/templates/decluttering-card
