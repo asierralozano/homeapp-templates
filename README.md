@@ -29,8 +29,16 @@ button_card_templates: !include_dir_merge_named homeapp-templates/templates/butt
 decluttering_templates: !include_dir_merge_named homeapp-templates/templates/decluttering-card
 ```
 
-
 # TODOs
 * Implement more entities domains
 * Support themes
 * Support variations of the existings cards
+* Order a little bit some messy parts of the code
+
+# Contribute
+I would love to build a wide stardard templates that follows the "Home.app" style, so please! feel free to contribute!  
+To do it, you just need to clone this repo, create a PR, and that's it!  
+It would be awesome!
+
+# Thanks!
+I would also say thanks to every contributor and the authors of the resources that I'm using! Thanks guys! 
