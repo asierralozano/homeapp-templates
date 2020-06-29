@@ -13,6 +13,8 @@ We are right now supporting the following entities domains:
 
 Of course, this is not a 1to1 match to the "Home.app" style. We have took the idea, and implemented it in our way.
 
+**Keep in mind that this config ONLY WORKS on YAML mode**
+
 # How to install it on HomeAssistant.
 * First of all, you need to install HACS, because we need some cards from there.
 * Once you have HACS installed, you need to install the following cards:
