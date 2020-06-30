@@ -11,6 +11,25 @@ mediaplayer_button_style:
       entity_id: '[[[ return entity.entity_id ]]]'
     haptic: light
 
+  hold_action:
+    action: call-service
+    service: browser_mod.popup
+    service_data:
+      title: '[[[ return entity.attributes.friendly_name ]]]'
+      deviceID: this
+      style:
+        --ha-card-border-radius: 1em
+        --more-info-header-color: rgba(255,255,255,0.6)
+        # background: none
+        box-shadow: none
+      card:  
+        type: vertical-stack
+        cards:      
+        - type: custom:mini-media-player
+          entity: '[[[ return entity.entity_id ]]]'   
+          icon: '[[[ return entity.attributes.icon ]]]'
+          artwork: full-cover                  
+
   state: 
       - styles:
           card: [background-color: 'rgba(255, 255, 255, 0.8)']
@@ -61,8 +80,6 @@ mediaplayer_button_style:
         "[[[ return entity.attributes.entity_picture == null ? 'none' : 'drop-shadow(0 0 1.3vw rgba(0,0,0,0.7))'; ]]]", 
         fill: '#dedede', top: 0, right: 0, bottom: 70px, left: 80px, margin: auto, width: 15%, height: 15%, position: absolute, z-index: 10]
       
-  hold_action:
-    action: more-info  
   icon: mdi:youtube-tv
 
 # MEDIA PLAYER SPEAKER

@@ -24,6 +24,7 @@ Of course, this is not a 1to1 match to the "Home.app" style. We have took the id
   * [browser_mod](https://github.com/thomasloven/hass-browser_mod)
   * [light-popup-card](https://github.com/DBuit/light-popup-card)
   * [switch-popup-card](https://github.com/DBuit/switch-popup-card)
+  * [mini-media-player](https://github.com/kalkih/mini-media-player)
 * Clone this repo into the `config` folder on your HA installation
 * Define the following lines on your lovelace `.yaml` file in which you are setting up your Lovelace UI (in my case, `ui-lovelace.yaml`):
 ```yaml
