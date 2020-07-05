@@ -1,0 +1,12 @@
+map:
+  card:
+    type: map 
+    aspect_ratio: 1x1 
+    default_zoom: 12 
+    entities: 
+      - entity: "[[entity]]"
+    hours_to_show: 0
+    style:
+      .: |
+        ha-card {
+          border-radius: 20px; box-shadow: none}
