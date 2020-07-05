@@ -1,0 +1,153 @@
+room:
+  template: homekit_style
+  aspect_ratio: 1/0.66
+  size: 10%
+
+  show_state: false
+  variables:
+    temp_sensor: null 
+    motion_sensor: null
+    room_name: "Default"
+    room_image: null 
+  name: "[[[ return variables.room_name ]]]"
+
+  custom_fields:
+    banner: >
+      <svg viewBox="0 0 50 50" />
+
+    room_image: >
+      <svg width="500" height="300" viewBox="0 50 50 50" />
+
+    brightness: >
+      [[[ 
+        const radius = 20.5; const circumference = radius * 2 * Math.PI;
+        if (entity.state === 'on' && entity.attributes.brightness) {
+        const brightness = Math.round(entity.attributes.brightness / 2.54);
+        return `<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="${radius}" stroke="#b2b2b2" stroke-width="1.5" fill="none" style="
+        transform: rotate(-90deg); transform-origin: 50% 50%; stroke-dasharray: ${circumference}; stroke-dashoffset: ${circumference - brightness / 100 * circumference};" />
+        <text x="50%" y="54%" fill="#8d8e90" font-size="11" text-anchor="middle" alignment-baseline="middle">${brightness}<tspan font-size="">%</tspan></text></svg>`; }
+        else {
+          return `<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="${radius}" stroke="#b2b2b2" stroke-width="1.5" fill="none" style="
+          transform: rotate(-90deg); transform-origin: 50% 50%; stroke-dasharray: ${circumference}; stroke-dashoffset: ${circumference - 0 / 100 * circumference};" />
+          <text x="50%" y="54%" fill="#8d8e90" font-size="11" text-anchor="middle" alignment-baseline="middle">0<tspan font-size="">%</tspan></text></svg>`;
+        } 
+      ]]]      
+
+    temperature: >
+      [[[ 
+        if (variables.temp_sensor){
+          const temp = states[`${variables.temp_sensor}`].state
+          return `<span>${temp}°C</span><ha-icon
+            icon="mdi:thermometer"
+            style="width: 20px; height: 20px">
+            </ha-icon>`
+        }
+        else {
+          return null
+        }
+      ]]]      
+
+  styles:
+    custom_fields:
+      banner:
+        - background-color: >
+            [[[ 
+              if (entity.state == 'off') {
+                if (variables.room_image){
+                  return 'rgba(13,17,19,0.0)'   
+                } 
+                else {
+                  return 'rgba(13,17,19,0.3)' 
+                }
+              }
+              else {
+                return 'rgba(255,255,255,0.9)'
+              }
+            ]]]
+        
+        - background-size: cover 
+        - top: 0% 
+        - left: 0%
+        - width: 100%
+        - height: 18%
+        - position: absolute
+        - z-index: 1
+
+      room_image:
+        - background-image: >
+            [[[
+              if (variables.room_image) {
+                return `url("${variables.room_image}")`
+              }
+              else {
+                return null
+              }
+              ]]]
+        - top: 4%
+        - position: relative
+        - width: 100%
+        - height: 100%
+        - background-size: cover
+        # - clip-path: circle(80px at center)  
+
+      brightness: 
+        # [bottom: 10%, right: 30%, width: 40px, height: 40px, position: relative, letter-spacing: 0.03vw, z-index: 3]      
+        [top: 3%, right: 2%, width: 40px, height: 40px, position: absolute, letter-spacing: 0.03vw, z-index: 3]      
+
+      temperature: 
+        # - position: relative
+        # - z-index: 3
+        # - font-size: 12px
+        # - font-family: Helvetica
+        # - font-weight: bold
+        # # - left: 25%
+        # - right: 50%
+        # - height: 100%
+        # - width: 100%
+        # - display: inline-block
+        # - color: >
+        #     [[[ 
+        #       if (entity.state === "on") {
+        #         return 'rgba(0, 0, 0, 0.6)'
+        #       } 
+        #       else {
+        #         return 'var(--primary-text-color)'
+        #       }
+        #     ]]]
+        - position: absolute
+        - z-index: 3
+        - font-size: 12px
+        - font-family: Helvetica
+        - font-weight: bold
+        - left: 70%
+        - top: 6%
+        - color: >
+            [[[ 
+              if (entity.state === "on") {
+                return 'rgba(0, 0, 0, 0.6)'
+              } 
+              else {
+                return 'var(--primary-text-color)'
+              }
+            ]]]
+
+    grid: 
+      - grid-template-areas: '"i n temperature brightness" "room_image room_image room_image room_image"' #". . . ."'
+      - grid-template-columns: 10% auto 15% 10%
+      - grid-template-rows: 10% auto # min-content min-content min-content
+
+    name:
+      - color: var(--primary-text-color) 
+      - z-index: 3   
+
+    icon:
+      - width: 50%
+      - padding-left: 10%
+      - padding-top: 0px
+      - bottom: 20% 
+      - position: absolute
+      - z-index: 3
+
+
+
+    
