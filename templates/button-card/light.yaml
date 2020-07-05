@@ -1,11 +1,14 @@
 # LIGHT BUTTON
 light_button_style:
   template: homekit_style
+  double_tap_action: !include ../popup/light_popup.yaml    
   hold_action: !include ../popup/light_popup.yaml    
   state: 
-    # - <<: *button_state 
-    - styles:
-        icon: [color: 'var(--button-card-light-color)']   
+    - styles: 
+        icon: [color: 'var(--button-card-light-color)']
+      value: 'on'
+      id: _state_value_on
+
   styles:
     grid:
       - position: relative

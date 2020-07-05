@@ -34,7 +34,7 @@ homekit_style:
       value: 'arming'
 
     - styles: &default_off
-        card: [background-color: null]
+        card: [background-color: "rgba(10, 10, 10, 0.7)"]
         icon: [color: 'rgb(142, 142, 147)']
       value: "disarmed"
 
