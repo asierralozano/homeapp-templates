@@ -27,7 +27,7 @@ weather_button_style:
   custom_fields:
     temperature: >
       [[[ 
-        const temp = entity.attributes.temperature 
+        const temp = Math.round(entity.attributes.temperature)
         return `${temp}°`
       ]]]
     
